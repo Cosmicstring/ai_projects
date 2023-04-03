@@ -4,6 +4,4 @@ I have used the standard kaggle API to pull the source files of the course and i
 
 ### Additional lib equirements
 
-Beside the usual pip libraries, one needs to also install the kaggle's `learntools`
-
 [![learntools](https://img.shields.io/badge/learntools-master-blue?style=flat&logo=github)](https://github.com/Kaggle/learntools)
