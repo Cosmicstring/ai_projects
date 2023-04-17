@@ -9,7 +9,7 @@ class DataExploration(object):
 
     """
 
-    def __init__(self):
+    def __init__(self) -> None:
 
         self.datasets = {}
 
