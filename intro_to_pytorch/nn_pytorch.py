@@ -14,6 +14,9 @@ import helper
 SHOW = 0
 torch.manual_seed(42)
 
+# Set double precision
+torch.set_default_dtype(torch.float64)
+
 def softmax(input: Tensor):
 
     tmp = input.exp()
@@ -172,7 +175,7 @@ def test_LinearModel_FashionMNIST(trainloader, testloader, optim_kywrd="SGD"):
 
     # Let's also try different optimizers -- SGD, Adam, LBFGS, ConjugateGradient
     SGDoptimizer = optim.SGD(model.parameters(), lr=0.01)
-    LFBGSoptimizer = optim.LBFGS(model.parameters(), lr=0.01)
+    LFBGSoptimizer = optim.LBFGS(model.parameters(), history_size=20, max_iter=4) # LBFGS uses 2nd order information, so allows for bigger learning rate!
     ADAMoptimizer = optim.Adam(model.parameters(), lr=0.01) # Does Adam need smaller learning rate?
 
     loss = nn.CrossEntropyLoss()
@@ -196,10 +199,10 @@ def test_LinearModel_FashionMNIST(trainloader, testloader, optim_kywrd="SGD"):
             if optim_kywrd == "LBFGS":
                 def closure():
                     optimizer.zero_grad()
-                    output = model(input)
-                    loss = loss_fn(output, target)
-                    loss.backward()
-                    return loss
+                    scores = model(images)
+                    _loss = loss(scores, labels)
+                    _loss.backward()
+                    return _loss
                 optimizer.step(closure)
                 scores = model(images)
                 _loss = loss(scores, labels)
@@ -273,6 +276,6 @@ if __name__ == "__main__":
     testset = datasets.FashionMNIST('~/.pytorch/F_MNIST_data/', download=True, train=False, transform=transform)
     testloader = torch.utils.data.DataLoader(testset, batch_size=64, shuffle=True)
 
-    test_LinearModel_FashionMNIST(trainloader, testloader, optim_kywrd="Adam")
+    test_LinearModel_FashionMNIST(trainloader, testloader, optim_kywrd="LBFGS")
 
 
