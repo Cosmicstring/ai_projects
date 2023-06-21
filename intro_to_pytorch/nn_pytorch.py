@@ -154,19 +154,40 @@ def test_SequentialModel_training(training_set):
             plt.show()
         break
 
-def test_LinearModel_FashionMNIST(trainloader, testloader, optim_kywrd="SGD"):
+def test_LinearModel_FashionMNIST(trainloader, testloader,
+                                  optim_kywrd="SGD",
+                                  EPOCHS = 30):
+
+    def get_test_acc():
+
+        with torch.no_grad():
+            images,labels = next(iter(testloader))
+
+            # Force model to eval mode to correctly evaluate on test dataset
+            model.eval()
+            probs = torch.exp(model(images.view(images.shape[0],-1)))
+
+            top_p, top_class = probs.topk(1, dim=1)
+            matching = top_class == labels.view(*top_class.shape)
+            acc = matching.sum()/matching.size().numel()
+            print(f"{acc.item()*100}%\n\n")
 
     input_layer = 784
     hidden_layers = [128,64]
     output_layer = 10
-    EPOCHS = 5
+
+    # Test with dropout:
+    #   eval --> forces droput prob. to 0
+    #   train --> turns dropout back on
 
     layers = OrderedDict(
         [
             ('fc1', nn.Linear(input_layer, hidden_layers[0])),
             ('relu1', nn.ReLU()),
+            ('droput1', nn.Dropout(p=0.15)),
             ('fc2', nn.Linear(hidden_layers[0], hidden_layers[1])),
             ('relu2', nn.ReLU()),
+            ('droput2', nn.Dropout(p=0.15)),
             ('fc3', nn.Linear(hidden_layers[1], output_layer)),
             ('LogSoftmax', nn.LogSoftmax(dim=-1))
         ]
@@ -192,6 +213,10 @@ def test_LinearModel_FashionMNIST(trainloader, testloader, optim_kywrd="SGD"):
 
     for epoch in range(EPOCHS):
         _loss = 0
+
+        print(f"Test accuracy before epoch {epoch}:")
+        get_test_acc()
+        model.train()
         for images, labels in trainloader:
             # Flatten images
             images = images.view(images.shape[0], -1)
@@ -212,11 +237,11 @@ def test_LinearModel_FashionMNIST(trainloader, testloader, optim_kywrd="SGD"):
                 _loss = loss(scores, labels)
                 _loss.backward()
                 optimizer.step()
-
         else:
             print("Current loss: ", _loss)
 
-
+        print(f"Test accuracy after epoch {epoch}:")
+        get_test_acc()
 
     for images, labels in testloader:
         img = images[42].view(1, 784)
@@ -276,6 +301,4 @@ if __name__ == "__main__":
     testset = datasets.FashionMNIST('~/.pytorch/F_MNIST_data/', download=True, train=False, transform=transform)
     testloader = torch.utils.data.DataLoader(testset, batch_size=64, shuffle=True)
 
-    test_LinearModel_FashionMNIST(trainloader, testloader, optim_kywrd="LBFGS")
-
-
+    test_LinearModel_FashionMNIST(trainloader, testloader, optim_kywrd="Adam")
