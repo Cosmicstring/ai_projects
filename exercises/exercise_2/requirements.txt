@@ -1,0 +1,5 @@
+torch==2.0.1
+torchvision==0.15.2
+albumentations==1.2.1
+cv2==4.7.0
+progressbar==4.2.0
