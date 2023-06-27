@@ -5,7 +5,7 @@
 Goal of this exercise was visualization and clustering implementation. 
 
 For visualization, a smoothed distribution of customer views upon an add was performed, 
-starting from a completely unstructured dataset. Result of this visualization is [here](exercise_1/heatmap_exercise_1_1.pdf) and the corresponding implementation
+  starting from a completely unstructured dataset. Result of this visualization is [here](exercise_1/heatmap_exercise_1_1.pdf) (with user look up on top [here](exercise_1/heatmap_wuser_looks_exercise_1_1.pdf)) and the corresponding implementation
 [here](exercise_1/exercise1_1.py).
 
 The clustering algorithm I implemented from scratch is the [Mean-Shift](https://scikit-learn.org/stable/modules/generated/sklearn.cluster.MeanShift.html) algorithm, using 
