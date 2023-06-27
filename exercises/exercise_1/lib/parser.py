@@ -8,12 +8,12 @@ class ArgParserEx1(argparse.ArgumentParser):
 
         self.add_argument(
             "--imagepath",
-            type=str, default="/home/akostic/Documents/Priprema za posao/ProTech/Heineken.jpg"
+            type=str, default="Heineken.jpg"
         )
 
         self.add_argument(
             "--csvpath",
-            type=str, default="/home/akostic/Documents/Priprema za posao/ProTech/Heineken.csv"
+            type=str, default="Heineken.csv"
         )
 
         self.add_argument(
