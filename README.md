@@ -11,7 +11,8 @@ AI related projects -- learning progress
   - [Mathematics for Machine Learning](https://mml-book.github.io/book/mml-book.pdf) - C. S. Ong, A. A. Faisal, M. P. Deisenroth
   - Christopher, M. B. (2016). Pattern Recognition and Machine Learning. Springer-Verlag New York.
   - Friedman, J., Hastie, T., & Tibshirani, R. (2001). The elements of statistical learning (Vol. 1, pp. 337-387). New York: Springer series in statistics.
-  - [Statistical physics of data assimilation and machine learning](https://www.cambridge.org/fr/academic/subjects/physics/statistical-physics/statistical-physics-data-assimilation-and-machine-learning) 
+  - [Statistical physics of data assimilation and machine learning](https://www.cambridge.org/fr/academic/subjects/physics/statistical-physics/statistical-physics-data-assimilation-and-machine-learning)
+  - [Understanding Deep Learning](https://github.com/udlbook/udlbook/tree/main) - J.D.Prince
 
 - Additional paper reading material:
   - [ML @ Berkeley](https://bair.berkeley.edu/blog/)
